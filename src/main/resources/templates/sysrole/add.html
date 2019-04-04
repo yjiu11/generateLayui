@@ -17,7 +17,7 @@
 		<!-- 第1行 -->
 		<input type="hidden" id="id" name="id" th:value="${pro?.id}"/>
 		<!-- 第1行 -->
-<div class="layui-row">
+<!-- <div class="layui-row">
 	<div class="layui-col-md5 layui-col-md-offset3">
 		<div class="layui-form-item">
 			<label class="layui-form-label">id</label>
@@ -26,14 +26,14 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 <!-- 第2行 -->
 <div class="layui-row">
 	<div class="layui-col-md5 layui-col-md-offset3">
 		<div class="layui-form-item">
-			<label class="layui-form-label">username</label>
+			<label class="layui-form-label">role</label>
 			<div class="layui-input-block" >
-				<input type="text" name="username" th:value="${pro?.username}" lay-verify="title" autocomplete="off" placeholder="username" class="layui-input">
+				<input type="text" name="role" th:value="${pro?.role}" lay-verify="title" autocomplete="off" placeholder="role" class="layui-input">
 			</div>
 		</div>
 	</div>
@@ -42,9 +42,9 @@
 <div class="layui-row">
 	<div class="layui-col-md5 layui-col-md-offset3">
 		<div class="layui-form-item">
-			<label class="layui-form-label">realname</label>
+			<label class="layui-form-label">description</label>
 			<div class="layui-input-block" >
-				<input type="text" name="realname" th:value="${pro?.realname}" lay-verify="title" autocomplete="off" placeholder="realname" class="layui-input">
+				<input type="text" name="description" th:value="${pro?.description}" lay-verify="title" autocomplete="off" placeholder="description" class="layui-input">
 			</div>
 		</div>
 	</div>
@@ -53,9 +53,9 @@
 <div class="layui-row">
 	<div class="layui-col-md5 layui-col-md-offset3">
 		<div class="layui-form-item">
-			<label class="layui-form-label">password</label>
+			<label class="layui-form-label">resourceIds</label>
 			<div class="layui-input-block" >
-				<input type="text" name="password" th:value="${pro?.password}" lay-verify="title" autocomplete="off" placeholder="password" class="layui-input">
+				<input type="text" name="resourceIds" th:value="${pro?.resourceIds}" lay-verify="title" autocomplete="off" placeholder="resourceIds" class="layui-input">
 			</div>
 		</div>
 	</div>
@@ -64,42 +64,9 @@
 <div class="layui-row">
 	<div class="layui-col-md5 layui-col-md-offset3">
 		<div class="layui-form-item">
-			<label class="layui-form-label">roleIds</label>
+			<label class="layui-form-label">available</label>
 			<div class="layui-input-block" >
-				<input type="text" name="roleIds" th:value="${pro?.roleIds}" lay-verify="title" autocomplete="off" placeholder="roleIds" class="layui-input">
-			</div>
-		</div>
-	</div>
-</div>
-<!-- 第6行 -->
-<div class="layui-row">
-	<div class="layui-col-md5 layui-col-md-offset3">
-		<div class="layui-form-item">
-			<label class="layui-form-label">email</label>
-			<div class="layui-input-block" >
-				<input type="text" name="email" th:value="${pro?.email}" lay-verify="title" autocomplete="off" placeholder="email" class="layui-input">
-			</div>
-		</div>
-	</div>
-</div>
-<!-- 第7行 -->
-<div class="layui-row">
-	<div class="layui-col-md5 layui-col-md-offset3">
-		<div class="layui-form-item">
-			<label class="layui-form-label">phone</label>
-			<div class="layui-input-block" >
-				<input type="text" name="phone" th:value="${pro?.phone}" lay-verify="title" autocomplete="off" placeholder="phone" class="layui-input">
-			</div>
-		</div>
-	</div>
-</div>
-<!-- 第8行 -->
-<div class="layui-row">
-	<div class="layui-col-md5 layui-col-md-offset3">
-		<div class="layui-form-item">
-			<label class="layui-form-label">locked</label>
-			<div class="layui-input-block" >
-				<input type="text" name="locked" th:value="${pro?.locked}" lay-verify="title" autocomplete="off" placeholder="locked" class="layui-input">
+				<input type="text" name="available" th:value="${pro?.available}" lay-verify="title" autocomplete="off" placeholder="available" class="layui-input">
 			</div>
 		</div>
 	</div>
@@ -125,16 +92,16 @@ layui.use(['form', 'layedit', 'laydate','element','jquery'], function() {
 		var form1 = $("#form1").serialize();
 		var url = '';
 		if($('#id').val()==''){
-			url = '/sysuser/save'
+			url = '/sysrole/save'
 		}else{
-			url = '/sysuser/update'
+			url = '/sysrole/update'
 		}
 		$.ajax({
 			url:url,
 			data:form1,
 			success:function(data){
 				if(data.code == 0){
-					location.href="/page/sysuser/list";
+					location.href="/page/sysrole/list";
 				}else{
 					layer.msg(data.msg)
 				}

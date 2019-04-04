@@ -1,4 +1,4 @@
-package com.yjiu.service.impl;
+package com.ptw.shiro.service.impl;
 
 import java.util.Map;
 import java.util.Set;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.yjiu.mapper.SysUserMapper;
-import com.yjiu.pojo.SysUser;
-import com.yjiu.service.SysUserService;
+import com.ptw.shiro.mapper.SysRoleMapper;
+import com.ptw.shiro.pojo.SysRole;
+import com.ptw.shiro.service.SysRoleService;
 import com.yjiu.tools.PTWResult;
 
 /**
@@ -23,12 +23,12 @@ import com.yjiu.tools.PTWResult;
  * @since 2019-04-03
  */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
 	@Override
-	public PTWResult selectByPage(Page<SysUser> page, String field, String order,
+	public PTWResult selectByPage(Page<SysRole> page, String field, String order,
 			Map<String, String> searchFields) {
 		boolean flag = StringUtils.equals(order, "desc")?false:true;
-		EntityWrapper<SysUser> wrapper = new EntityWrapper<SysUser>();
+		EntityWrapper<SysRole> wrapper = new EntityWrapper<SysRole>();
 		Set<String> keys = searchFields.keySet();
 		for (String k : keys) {
 			if(!StringUtils.isEmpty(searchFields.get(k))) {
@@ -36,7 +36,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 				wrapper.like(k, searchFields.get(k));
 			}
 		}
-		Page<SysUser> selectPage = this.selectPage(page, wrapper);
+		Page<SysRole> selectPage = this.selectPage(page, wrapper);
 		wrapper.orderBy(field, flag);
 		System.out.println(selectPage.getTotal());
 		return PTWResult.ok(selectPage.getRecords(),selectPage.getTotal());

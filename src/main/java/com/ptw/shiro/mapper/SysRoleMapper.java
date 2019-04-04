@@ -1,7 +1,6 @@
-package com.yjiu.mapper;
+package com.ptw.shiro.mapper;
 
-import com.yjiu.pojo.SysUser;
-import org.apache.ibatis.annotations.Mapper;
+import com.ptw.shiro.pojo.SysRole;
 import org.apache.ibatis.annotations.Mapper;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
@@ -14,7 +13,6 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @since 2019-04-04
  */
 @Mapper
-@Mapper
-public interface SysUserMapper extends BaseMapper<SysUser> {
+public interface SysRoleMapper extends BaseMapper<SysRole> {
 
 }

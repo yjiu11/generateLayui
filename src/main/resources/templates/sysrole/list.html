@@ -10,21 +10,13 @@
 </head>
 <body>
 <div class="search">
-	username:
+	role:
 <div class='layui-inline'>
-<input class='layui-input' name='username' id='username' autocomplete='off'>
+<input class='layui-input' name='role' id='role' autocomplete='off'>
 </div>
-realname:
+description:
 <div class='layui-inline'>
-<input class='layui-input' name='realname' id='realname' autocomplete='off'>
-</div>
-phone:
-<div class='layui-inline'>
-<input class='layui-input' name='phone' id='phone' autocomplete='off'>
-</div>
-email:
-<div class='layui-inline'>
-<input class='layui-input' name='email' id='email' autocomplete='off'>
+<input class='layui-input' name='description' id='description' autocomplete='off'>
 </div>
 
     <!-- 项目编号：
@@ -59,18 +51,15 @@ layui.use('table', function(){
     ,elem: '#test'
     ,autoSort:false
     ,toolbar: '#toolbarDemo'
-    ,url:'/sysuser/list/data'
+    ,url:'/sysrole/list/data'
     ,cols: [
     	[
     		{type:'checkbox'}
       		,{field:'id', title: 'id', sort: true}
-,{field:'username', title: 'username', sort: true}
-,{field:'realname', title: 'realname', sort: true}
-,{field:'password', title: 'password', sort: true}
-,{field:'roleIds', title: 'roleIds', sort: true}
-,{field:'email', title: 'email', sort: true}
-,{field:'phone', title: 'phone', sort: true}
-,{field:'locked', title: 'locked', sort: true}
+,{field:'role', title: 'role', sort: true}
+,{field:'description', title: 'description', sort: true}
+,{field:'resourceIds', title: 'resourceIds', sort: true}
+,{field:'available', title: 'available', sort: true}
 
       		,{title:'操作',fixed: 'right', width:200, align:'center', toolbar: '#barDemo'}
     	]
@@ -106,7 +95,7 @@ layui.use('table', function(){
     } else if(obj.event === 'del'){
       layer.confirm('确定要删除么', function(index){
     	 $.ajax({
-    		url:'/sysuser/batchDel',
+    		url:'/sysrole/batchDel',
     		data:{ids:data.id},
     		success:function(data){
     			if(data.code==0){
@@ -121,16 +110,14 @@ layui.use('table', function(){
     } else if(obj.event === 'edit'){
     	//layer.alert(JSON.stringify(data));
       //layer.alert('编辑行：<br>'+ JSON.stringify(data))
-      location.href="/page/sysuser/add?id="+data.id
+      location.href="/page/sysrole/add?id="+data.id
     }
   });
   	var $ = layui.$, active = {
     reload: function(){
       //var demoReload = $('#demoReload');
-      var username = $('#username');
-var realname = $('#realname');
-var phone = $('#phone');
-var email = $('#email');
+      var role = $('#role');
+var description = $('#description');
 
       //var id=$("#demoReload_ID");
       //执行重载
@@ -139,10 +126,8 @@ var email = $('#email');
           curr: 1 //重新从第 1 页开始
         }
         ,where: {
-        	username:username.val(),
-realname:realname.val(),
-phone:phone.val(),
-email:email.val(),
+        	role:role.val(),
+description:description.val(),
 
         	  //name: demoReload.val()
         	  //,templet_id:id.val()
@@ -156,7 +141,7 @@ email:email.val(),
      var checkStatus = table.checkStatus(obj.config.id);
      switch(obj.event){
        case 'add':
-    	   location.href='/page/sysuser/add'
+    	   location.href='/page/sysrole/add'
        break;
        case 'del':
     	   var data = checkStatus.data;
@@ -166,11 +151,11 @@ email:email.val(),
     	   })
     	layer.confirm('确定要删除么', function(index){
     	 $.ajax({
-    		url:'/sysuser/batchDel',
+    		url:'/sysrole/batchDel',
     		data:{ids:ids.join(",")},
     		success:function(data){
     			if(data.code==0){
-    				location.href='/page/sysuser/list'    				
+    				location.href='/page/sysrole/list'    				
     			}else{
     				layer.alert(data.msg)
     			}

@@ -44,11 +44,11 @@ public class TestMP {
          .setNaming(NamingStrategy.underline_to_camel) // 数据库表映射到实体的命名策略
          .entityTableFieldAnnotationEnable(true)
 //         .setTablePrefix("tbl_")
-         .setInclude("sys_user");  // 生成的表
+         .setInclude("sys_role");  // 生成的表
     
     //4. 包名策略配置 
     PackageConfig pkConfig = new PackageConfig();
-    pkConfig.setParent("com.yjiu")
+    pkConfig.setParent("com.ptw.shiro")
          .setMapper("mapper")
          .setService("service")
          .setController("controller")
