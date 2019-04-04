@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>后台管理系统</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+</head>
+<body>
+<!-- <div id="oneCheck" style="display:none">
+	<span>hehehehehe</span>
+</div> -->
+<div class="layui-container">
+	<form class="layui-form layui-form-pane" id="form1">
+		<!-- 第1行 -->
+		<input type="hidden" id="sId" name="sId" th:value="${pro?.sId}"/>
+		{1}
+		<!-- 按钮 -->
+		 <div class="layui-row">
+		    <div class="layui-col-md5 layui-col-md-offset3 ">
+		    	<button type="button" class="layui-btn layui-btn-normal layui-btn-fluid onSave"><i class="layui-icon layui-icon-ok-circle"></i><span th:text="${#strings.isEmpty(pro)}?'保存':'更新'"></span></button>
+		    </div>
+		 </div>
+	</form>
+</div>
+<script src="/layui/layui.all.js" charset="utf-8"></script>
+<script type="text/javascript">
+layui.use(['form', 'layedit', 'laydate','element','jquery'], function() {
+	var form = layui.form,
+	layer = layui.layer,
+	element=layui.element,
+	$=layui.jquery;
+	//保存、更新按钮
+	$(document).on('click','.onSave',function(){
+		var form1 = $("#form1").serialize();
+		var url = '';
+		if($('#sId').val()==''){
+			url = '/sysresource/save'
+		}else{
+			url = '/sysresource/update'
+		}
+		$.ajax({
+			url:url,
+			data:form1,
+			success:function(data){
+				if(data.code == 0){
+					location.href="/page/sysresource/list";
+				}else{
+					layer.msg(data.msg)
+				}
+			}
+		})
+	});
+});
+</script>
+</body>
+</html>

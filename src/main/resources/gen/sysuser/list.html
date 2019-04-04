@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>后台管理系统</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+</head>
+<body>
+<div class="search">
+	username:
+<div class='layui-inline'>
+<input class='layui-input' name='username' id='username' autocomplete='off'>
+</div>
+realname:
+<div class='layui-inline'>
+<input class='layui-input' name='realname' id='realname' autocomplete='off'>
+</div>
+phone:
+<div class='layui-inline'>
+<input class='layui-input' name='phone' id='phone' autocomplete='off'>
+</div>
+email:
+<div class='layui-inline'>
+<input class='layui-input' name='email' id='email' autocomplete='off'>
+</div>
+
+    <!-- 项目编号：
+  <div class="layui-inline">
+    <input class="layui-input" name="id" id="demoReload_ID" autocomplete="off">
+  </div> -->
+  <button class="layui-btn" data-type="reload">搜索</button>
+</div>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script src="/layui/layui.all.js" charset="utf-8"></script>
+<!-- 发布状态 -->
+<script type="text/html" id="switchTpl">
+  <input type="checkbox" data-id="{{d.id}}" name="releaseStatus" value="{{d.releaseStatus}}" lay-skin="switch" lay-text="已发布|未发布" lay-filter="sexDemo" {{ d.releaseStatus == 1 ? 'checked' : '' }}>
+</script>
+<!-- 头部工具栏 -->
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add">添加资源</button>
+	<button class="layui-btn layui-btn-sm" lay-event="del">删除资源</button>
+  </div>
+</script>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
+</script>
+<script>
+layui.use('table', function(){
+  var table = layui.table,form = layui.form;
+  table.render({
+	 height:'full-60'
+    ,elem: '#test'
+    ,autoSort:false
+    ,toolbar: '#toolbarDemo'
+    ,url:'/sysuser/list/data'
+    ,cols: [
+    	[
+    		{type:'checkbox'}
+      		,{field:'id', title: 'id', sort: true}
+,{field:'username', title: 'username', sort: true}
+,{field:'realname', title: 'realname', sort: true}
+,{field:'password', title: 'password', sort: true}
+,{field:'roleIds', title: 'roleIds', sort: true}
+,{field:'email', title: 'email', sort: true}
+,{field:'phone', title: 'phone', sort: true}
+,{field:'locked', title: 'locked', sort: true}
+
+      		,{title:'操作',fixed: 'right', width:200, align:'center', toolbar: '#barDemo'}
+    	]
+    ]
+    ,limit:18
+    ,page: true
+  });
+  
+	//监听排序事件 
+  table.on('sort(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+    console.log(obj.field); //当前排序的字段名
+    console.log(obj.type); //当前排序类型：desc（降序）、asc（升序）、null（空对象，默认排序）
+    console.log(this); //当前排序的 th 对象
+   
+    //尽管我们的 table 自带排序功能，但并没有请求服务端。
+    //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+    table.reload('test', {
+      initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
+      ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+        field: obj.field //排序字段
+        ,order: obj.type //排序方式
+      }
+    });
+    
+    //layer.msg('服务端排序。order by '+ obj.field + ' ' + obj.type);
+  });
+  //监听工具条
+  table.on('tool(test)', function(obj){
+	  console.info(obj)
+    var data = obj.data;
+    if(obj.event === 'detail'){
+      layer.msg('ID：'+ data.id + ' 的查看操作');
+    } else if(obj.event === 'del'){
+      layer.confirm('确定要删除么', function(index){
+    	 $.ajax({
+    		url:'/sysuser/batchDel',
+    		data:{ids:data.id},
+    		success:function(data){
+    			if(data.code==0){
+	    			obj.del();
+	    	        layer.close(index);    				
+    			}else{
+    				layer.alert(data.msg)
+    			}
+    		}
+    	}) 
+      });
+    } else if(obj.event === 'edit'){
+    	//layer.alert(JSON.stringify(data));
+      //layer.alert('编辑行：<br>'+ JSON.stringify(data))
+      location.href="/page/sysuser/add?id="+data.id
+    }
+  });
+  	var $ = layui.$, active = {
+    reload: function(){
+      //var demoReload = $('#demoReload');
+      var username = $('#username');
+var realname = $('#realname');
+var phone = $('#phone');
+var email = $('#email');
+
+      //var id=$("#demoReload_ID");
+      //执行重载
+      table.reload('test', {
+        page: {
+          curr: 1 //重新从第 1 页开始
+        }
+        ,where: {
+        	username:username.val(),
+realname:realname.val(),
+phone:phone.val(),
+email:email.val(),
+
+        	  //name: demoReload.val()
+        	  //,templet_id:id.val()
+        }
+      });
+    }
+  };
+  	
+  //头工具栏事件
+   table.on('toolbar(test)', function(obj){
+     var checkStatus = table.checkStatus(obj.config.id);
+     switch(obj.event){
+       case 'add':
+    	   location.href='/page/sysuser/add'
+       break;
+       case 'del':
+    	   var data = checkStatus.data;
+    	   var ids = new Array();
+    	   $.each(data,function(i,n){
+    		   ids[i] = n.id;
+    	   })
+    	layer.confirm('确定要删除么', function(index){
+    	 $.ajax({
+    		url:'/sysuser/batchDel',
+    		data:{ids:ids.join(",")},
+    		success:function(data){
+    			if(data.code==0){
+    				location.href='/page/sysuser/list'    				
+    			}else{
+    				layer.alert(data.msg)
+    			}
+    		}
+    	}) 
+      });
+       break;
+     };
+   });
+  //编辑、删除按钮点击事件
+    $('.demoTable .layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+  $('.search .layui-btn').on('click', function(){
+    var type = $(this).data('type');
+    active[type] ? active[type].call(this) : '';
+  });
+	
+}); 
+</script> 
+</body>
+</html>

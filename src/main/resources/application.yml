@@ -1,0 +1,28 @@
+server:
+  port: 7001
+  servlet:
+    session:
+      timeout:
+        7200
+# 配置mybatis-plus
+mybatis-plus:
+  # 配置扫描xml
+  mapper-locations: classpath*:mybatis/**/*.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.yjiu.pojo
+logging:
+  level:
+    root: info
+    com: # 根据本地包修改日志级别
+      yjiu: 
+        mapper: debug
+spring:
+  #session: 
+   # store-type: none
+  thymeleaf: 
+    cache: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/shiro
+    username: root
+    password: mysqladmin
+    driver-class-name: com.mysql.jdbc.Driver
