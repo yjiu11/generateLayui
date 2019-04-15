@@ -31,6 +31,11 @@ import com.yjiu.tools.PTWResult;
 public class SysResourceController {
 	@Autowired
 	private SysResourceService thisService;
+	
+	@RequestMapping("/")
+	public String index() {
+		return "index";
+	}
 	@RequestMapping("/page/sysresource/list")
 	public String toPage_ProjectList() {
 		return "sysresource/list";

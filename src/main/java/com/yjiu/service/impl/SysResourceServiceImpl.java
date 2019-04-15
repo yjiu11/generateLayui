@@ -36,8 +36,8 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 				wrapper.like(k, searchFields.get(k));
 			}
 		}
-		Page<SysResource> selectPage = this.selectPage(page, wrapper);
 		wrapper.orderBy(field, flag);
+		Page<SysResource> selectPage = this.selectPage(page, wrapper);
 		System.out.println(selectPage.getTotal());
 		return PTWResult.ok(selectPage.getRecords(),selectPage.getTotal());
 	}

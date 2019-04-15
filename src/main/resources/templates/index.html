@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>在线示例 - layui</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="/layui/css/global.css" media="all">
+</head>
+<body>
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header header header-demo" spring>
+			<div class="layui-main">
+				<a class="logo" href="/"><img src="//res.layui.com/static/images/layui/logo.png" alt="layui"></a>
+				<div class="layui-form component" lay-filter="LAY-site-header-component"></div>
+				<ul class="layui-nav">
+					<li class="layui-nav-item "><a href="/doc/">文档<!-- <span class="layui-badge-dot"></span> --></a></li>
+					<li class="layui-nav-item layui-this"><a href="/demo/">示例<!--  --></a></li>
+
+					<li class="layui-nav-item layui-hide-xs">
+						<a href="//fly.layui.com/" target="_blank">社区</a>
+					</li>
+
+					<li class="layui-nav-item"><a href="javascript:;"> <!--<span class="layui-badge-dot" style="margin: -5px 0 0 -15px;"></span>-->周边
+					</a>
+						<dl class="layui-nav-child">
+							<dd lay-unselect>
+								<a href="//fly.layui.com/extend/" target="_blank">扩展组件</a>
+							</dd>
+							<dd lay-unselect>
+								<a href="//fly.layui.com/store/" target="_blank">模板市场 <span
+									class="layui-badge-dot"></span></a>
+								<hr>
+							</dd>
+
+							<dd class="layui-hide-sm layui-show-xs" lay-unselect>
+								<a href="//fly.layui.com/" target="_blank">社区交流</a>
+								<hr>
+							</dd>
+							<dd lay-unselect>
+								<a href="/admin/" target="_blank">后台模板</a>
+							</dd>
+							<dd lay-unselect>
+								<a href="/layim/" target="_blank">即时聊天</a>
+								<hr>
+							</dd>
+
+							<dd lay-unselect>
+								<a href="/alone.html" target="_blank" lay-unselect>独立组件</a>
+							</dd>
+							<dd lay-unselect>
+								<a href="https://fly.layui.com/jie/24209/" target="_blank">Axure
+									组件</a>
+							</dd>
+						</dl></li>
+
+					<li class="layui-nav-item layui-hide-xs" lay-unselect><a
+						href="/admin/">后台模板<span class="layui-badge-dot"
+							style="margin-top: -5px;"></span></a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+		<div class="layui-side layui-bg-black">
+			<div class="layui-side-scroll">
+
+				<ul class="layui-nav layui-nav-tree site-demo-nav">
+
+					<li class="layui-nav-item layui-nav-itemed"><a
+						class="javascript:;" href="javascript:;">开发工具</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="/demo/">调试预览</a>
+							</dd>
+						</dl></li>
+
+					<li class="layui-nav-item layui-nav-itemed"><a
+						class="javascript:;" href="javascript:;">布局</a>
+						<dl class="layui-nav-child">
+							<dd class="">
+								<a href="/demo/grid.html">栅格</a>
+							</dd>
+							<dd class="">
+								<a href="/demo/admin.html">后台布局</a>
+							</dd>
+						</dl></li>
+				</ul>
+
+			</div>
+		</div>
+		<div class="layui-body site-demo" style="width:300px;height:2000px;">
+			<form id="LAY_demoForm" target="LAY_demo" method="post">
+				<div class="site-demo-editor">
+					<div class="site-demo-area">
+						<input type="hidden" name="html" id="LAY_demoCodes">
+					</div>
+					<div class="site-demo-btn">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="layui-footer footer footer-demo">
+			<div class="layui-main">
+				<p><p>
+					© 2019 <a href="http://www.51tour.com/" target="_blank">北京凤凰假期国际旅行社</a>
+				</p>
+			</div>
+		</div>
+		<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+		<div class="site-tree-mobile layui-hide">
+			<i class="layui-icon">&#xe602;</i>
+		</div>
+		<!-- 如果不写，点击右侧空白处，不会自动收回左侧菜单 -->
+		<div class="site-mobile-shade"></div>
+		<script src="/layui/layui.all.js" charset="utf-8"></script>
+		<script>
+			window.global = {
+				pageType : 'demo',
+				preview : function() {
+					var preview = document.getElementById('LAY_preview');
+					return preview ? preview.innerHTML : '';
+				}()
+			};
+			layui.config({
+				base : '/layui/lay/modules/'
+			}).use('global');
+		</script>
+		<script>
+			var _hmt = _hmt || [];
+			(function() {
+			  var hm = document.createElement("script");
+			  hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
+			  var s = document.getElementsByTagName("script")[0]; 
+			  s.parentNode.insertBefore(hm, s);
+			})();
+		</script>
+	</div>
+</body>
+</html>

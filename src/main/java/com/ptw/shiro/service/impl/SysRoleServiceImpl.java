@@ -36,8 +36,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 				wrapper.like(k, searchFields.get(k));
 			}
 		}
-		Page<SysRole> selectPage = this.selectPage(page, wrapper);
 		wrapper.orderBy(field, flag);
+		Page<SysRole> selectPage = this.selectPage(page, wrapper);
 		System.out.println(selectPage.getTotal());
 		return PTWResult.ok(selectPage.getRecords(),selectPage.getTotal());
 	}
