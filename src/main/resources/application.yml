@@ -24,5 +24,8 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/shiro
     username: root
-    password: mysqladmin
+    password: ENC(3xO9pNDifOGmw6+DOphOwacVi3EAHNId)
     driver-class-name: com.mysql.jdbc.Driver
+jasypt:
+  encryptor:
+    password: EbfYkitulv73I2p0mXI50JMXoaxZTKJ7
