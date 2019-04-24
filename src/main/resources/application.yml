@@ -22,7 +22,7 @@ spring:
   thymeleaf: 
     cache: false
   datasource:
-    url: jdbc:mysql://localhost:3306/shiro
+    url: jdbc:mysql://10.10.130.72:3306/shiro
     username: root
     password: ENC(3xO9pNDifOGmw6+DOphOwacVi3EAHNId)
     driver-class-name: com.mysql.jdbc.Driver
