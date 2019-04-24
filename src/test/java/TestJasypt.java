@@ -18,7 +18,7 @@ public class TestJasypt {
 
     @Test
     public void getPass() {
-        String password = encryptor.encrypt("mysqladmin");
+        String password = encryptor.encrypt("BJ333YCFXzyzHY");
         System.out.println(password+"----------------");
     }
 }
