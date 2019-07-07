@@ -14,9 +14,9 @@ import com.yjiu.service.GenService;
 @Service
 public class GenServiceImpl implements GenService {
 	private static String currentClassName = "SysRole";					//需要修改
+	private static String tableName = "sys_role";						//需要修改
 	private static String javaId = "id";								//需要修改
 	private static String dbId = "id";									//需要修改
-	private static String tableName = "sys_role";						//需要修改
 	private static String getIdMethod = "getId";						//需要修改
 	static Class<?> clz = new SysRole().getClass();						//需要修改
 	private static String oldPackage = "com.yjiu";						//需要时修改
