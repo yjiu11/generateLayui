@@ -19,13 +19,12 @@ public class GenServiceImpl implements GenService {
 	private static String dbId = "id";									//需要修改
 	private static String getIdMethod = "getId";						//需要修改
 	static Class<?> clz = new SysRole().getClass();						//需要修改
-	private static String oldPackage = "com.ptw";						//需要时修改
+	private static String oldPackage = "com.ptw";						//需要时修改，此处是生成时的包名
 	private static String newPackage = "com.ptw.gds";					//需要时修改
 	
 	//可以计算的变量
-	private static String outPackage = "com\\ptw\\gds\\";				//如果改包，需要修改,涉及到pojo以及mapper是在生成的基础上修改
+	private static String newPackagePath = newPackage.replaceAll("\\.", "/")+"/";				//如果改包，需要修改,涉及到pojo以及mapper是在生成的基础上修改
 	private static String oldPackagePath = oldPackage.replaceAll("\\.", "/")+"/";
-	private static String outPackagePath = "java\\" + outPackage;		
 	private static String basePackage="com\\yjiu\\";				
 	private static String basePackagePath="java\\"+basePackage;
 	//生成的JAVA文件
@@ -41,7 +40,7 @@ public class GenServiceImpl implements GenService {
 	private static File rest = new File(basePath+basePackagePath+"controller\\SysResourceController.java");
 	private static File html_list = new File(basePath+"resources\\templates\\sysresource\\list_demo.html");
 	private static File html_add = new File(basePath+"resources\\templates\\sysresource\\add_demo.html");
-	private static String outPath = genPath+"resources\\gen\\";
+	private static String outPath = genPath+"resources\\";
 	private static String old = "com.yjiu";
 	private static List<String> searchField = new ArrayList<>();
 	private static List<String> classField = new ArrayList<>();
@@ -63,7 +62,7 @@ public class GenServiceImpl implements GenService {
 										  replaceAll("public class "+currentClassName, "@TableName(\""+tableName+"\")\r\npublic class "+currentClassName).
 										  replaceAll("import com.baomidou.mybatisplus.annotations.TableField;", 
 												  "import com.baomidou.mybatisplus.annotations.TableName;\r\nimport com.baomidou.mybatisplus.annotations.TableField;");
-		FileUtils.writeStringToFile(new File(outPath+currentClassName+".java"), serviceResult);
+		FileUtils.writeStringToFile(new File(outPath+newPackagePath+"pojo\\"+currentClassName+".java"), serviceResult);
 		return serviceResult;
 	}
 	@Override
@@ -74,7 +73,7 @@ public class GenServiceImpl implements GenService {
 										  replaceAll("public interface "+currentClassName+"Mapper", "@Mapper\r\npublic interface "+currentClassName+"Mapper").
 										  replaceAll("import com.baomidou.mybatisplus.mapper.BaseMapper;", 
 												  "import org.apache.ibatis.annotations.Mapper;\r\nimport com.baomidou.mybatisplus.mapper.BaseMapper;");
-		FileUtils.writeStringToFile(new File(outPath+currentClassName+"Mapper.java"), serviceResult);
+		FileUtils.writeStringToFile(new File(outPath+newPackagePath+"mapper\\"+currentClassName+"Mapper.java"), serviceResult);
 		return serviceResult;
 	}
 	@Override
@@ -82,21 +81,21 @@ public class GenServiceImpl implements GenService {
 		String serviceStr = FileUtils.readFileToString(mapper_xml);
 		System.out.println(serviceStr);
 		String serviceResult = serviceStr.replaceAll(oldPackage,newPackage).replaceAll("<cache type=\"org.mybatis.caches.ehcache.LoggingEhcache\"/>", "");
-		FileUtils.writeStringToFile(new File(outPath+currentClassName+"Mapper.xml"), serviceResult);
+		FileUtils.writeStringToFile(new File(outPath+newPackagePath+"mapper\\"+currentClassName+"Mapper.xml"), serviceResult);
 		return serviceResult;
 	}
 	@Override
 	public String genService() throws Exception {
 		String serviceStr = FileUtils.readFileToString(service);
 		String serviceResult = serviceStr.replaceAll(old,newPackage).replaceAll("SysResource", currentClassName);
-		FileUtils.writeStringToFile(new File(outPath+currentClassName+"Service.java"), serviceResult);
+		FileUtils.writeStringToFile(new File(outPath+newPackagePath+"service\\"+currentClassName+"Service.java"), serviceResult);
 		return serviceResult;
 	}
 	@Override
 	public String genServiceImpl() throws Exception{
 		String serviceStr = FileUtils.readFileToString(serviceImpl);
 		String serviceResult = serviceStr.replaceAll(old,newPackage).replaceAll("SysResource", currentClassName);
-		FileUtils.writeStringToFile(new File(outPath+currentClassName+"ServiceImpl.java"), serviceResult);
+		FileUtils.writeStringToFile(new File(outPath+newPackagePath+"service\\impl\\"+currentClassName+"ServiceImpl.java"), serviceResult);
 		return serviceResult;
 	}
 	@Override
@@ -118,7 +117,7 @@ public class GenServiceImpl implements GenService {
 				replaceAll("sid", javaId).replaceAll("getsId", getIdMethod).
 				replaceAll("String name,String permission", searchParams.toString()).
 				replaceAll("map.put\\(\"name\", name\\);map.put\\(\"permission\", permission\\);", searchParamsMap.toString());
-		FileUtils.writeStringToFile(new File(outPath+currentClassName+"Controller.java"), serviceResult);
+		FileUtils.writeStringToFile(new File(outPath+newPackagePath+"controller\\"+currentClassName+"Controller.java"), serviceResult);
 		return serviceResult;
 	}
 
@@ -144,7 +143,7 @@ public class GenServiceImpl implements GenService {
 				replaceAll("\\{2\\}", searchParams2.toString()).
 				replaceAll("\\{3\\}", searchParams3.toString()).
 				replaceAll("\\{4\\}", searchParams4.toString());
-		FileUtils.writeStringToFile(new File(outPath+currentClassName.toLowerCase()+"/list.html"), serviceResult);
+		FileUtils.writeStringToFile(new File(outPath+"templates\\"+currentClassName.toLowerCase()+"/list.html"), serviceResult);
 		return serviceResult;
 	}
 
@@ -168,7 +167,7 @@ public class GenServiceImpl implements GenService {
 		String serviceResult = serviceStr.replaceAll("sysresource/", currentClassName.toLowerCase()+"/").
 				replaceAll("sId", javaId).
 				replaceAll("\\{1\\}", searchParams.toString());
-		FileUtils.writeStringToFile(new File(outPath+currentClassName.toLowerCase()+"/add.html"), serviceResult);
+		FileUtils.writeStringToFile(new File(outPath+"templates\\"+currentClassName.toLowerCase()+"/add.html"), serviceResult);
 		return serviceResult;
 	}
 	
@@ -195,8 +194,6 @@ public class GenServiceImpl implements GenService {
 	public static void main(String[] args) throws Exception {
 		GenServiceImpl impl = new GenServiceImpl();
 		impl.gen();
-		String oldPackage = "com.ptw";
-		String oldPackagePath = oldPackage.replaceAll("\\.", "/")+"/";
 		//System.out.println(oldPackagePath);
 		//impl.genPojo();
 		//impl.genMapper();
