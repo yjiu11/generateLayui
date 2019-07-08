@@ -9,7 +9,7 @@ mybatis-plus:
   # 配置扫描xml
   mapper-locations: classpath*:mybatis/**/*.xml
   # 实体扫描，多个package用逗号或者分号分隔
-  type-aliases-package: com.yjiu.pojo
+  type-aliases-package: com.yjiu.pojo,cn.pk.pojo
 logging:
   level:
     root: info

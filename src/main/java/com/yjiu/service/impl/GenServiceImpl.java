@@ -19,22 +19,30 @@ public class GenServiceImpl implements GenService {
 	private static String dbId = "id";									//需要修改
 	private static String getIdMethod = "getId";						//需要修改
 	static Class<?> clz = new SysRole().getClass();						//需要修改
-	private static String oldPackage = "com.yjiu";						//需要时修改
-	private static String newPackage = "com.ptw.shiro";					//需要时修改
-	private static String outPackage = "com\\ptw\\shiro\\";				//如果改包，需要修改,涉及到pojo以及mapper是在生成的基础上修改
+	private static String oldPackage = "com.ptw";						//需要时修改
+	private static String newPackage = "com.ptw.gds";					//需要时修改
+	
+	//可以计算的变量
+	private static String outPackage = "com\\ptw\\gds\\";				//如果改包，需要修改,涉及到pojo以及mapper是在生成的基础上修改
+	private static String oldPackagePath = oldPackage.replaceAll("\\.", "/")+"/";
 	private static String outPackagePath = "java\\" + outPackage;		
 	private static String basePackage="com\\yjiu\\";				
 	private static String basePackagePath="java\\"+basePackage;
-	private static String basePath = "E:\\1YJIU\\WorkSpaces\\generateLayui\\src\\main\\";
-	private static File pojo = new File(basePath+outPackagePath+"pojo\\"+currentClassName+".java");
-	private static File mapper = new File(basePath+outPackagePath+"mapper\\"+currentClassName+"Mapper.java");
+	//生成的JAVA文件
+	private static String genPath = "E:\\1YJIU\\Tools\\src\\";
+	//根据SysResource所有文件去改变之前生成的JAVA文件
+	private static String basePath = "E:\\1Dev\\WorkSpaces\\STS4.0\\generateLayui\\src\\main\\";
+	private static File pojo = new File(genPath+oldPackagePath+"pojo\\"+currentClassName+".java");
+	private static File mapper = new File(genPath+oldPackagePath+"mapper\\"+currentClassName+"Mapper.java");
+	private static File mapper_xml = new File(genPath+oldPackagePath+"mapper\\"+currentClassName+"Mapper.xml");
+	//获取SysResource相关文件
 	private static File service = new File(basePath+basePackagePath+"service\\SysResourceService.java");
 	private static File serviceImpl = new File(basePath+basePackagePath+"service\\impl\\SysResourceServiceImpl.java");
 	private static File rest = new File(basePath+basePackagePath+"controller\\SysResourceController.java");
 	private static File html_list = new File(basePath+"resources\\templates\\sysresource\\list_demo.html");
 	private static File html_add = new File(basePath+"resources\\templates\\sysresource\\add_demo.html");
-	private static File mapper_xml = new File(basePath+"resources\\mybatis\\"+outPackage+"\\mapper\\"+currentClassName+"Mapper.xml");
-	private static String outPath = basePath+"resources\\gen\\";
+	private static String outPath = genPath+"resources\\gen\\";
+	private static String old = "com.yjiu";
 	private static List<String> searchField = new ArrayList<>();
 	private static List<String> classField = new ArrayList<>();
 	{//searchField写数据库的字段
@@ -80,14 +88,14 @@ public class GenServiceImpl implements GenService {
 	@Override
 	public String genService() throws Exception {
 		String serviceStr = FileUtils.readFileToString(service);
-		String serviceResult = serviceStr.replaceAll(oldPackage,newPackage).replaceAll("SysResource", currentClassName);
+		String serviceResult = serviceStr.replaceAll(old,newPackage).replaceAll("SysResource", currentClassName);
 		FileUtils.writeStringToFile(new File(outPath+currentClassName+"Service.java"), serviceResult);
 		return serviceResult;
 	}
 	@Override
 	public String genServiceImpl() throws Exception{
 		String serviceStr = FileUtils.readFileToString(serviceImpl);
-		String serviceResult = serviceStr.replaceAll(oldPackage,newPackage).replaceAll("SysResource", currentClassName);
+		String serviceResult = serviceStr.replaceAll(old,newPackage).replaceAll("SysResource", currentClassName);
 		FileUtils.writeStringToFile(new File(outPath+currentClassName+"ServiceImpl.java"), serviceResult);
 		return serviceResult;
 	}
@@ -104,7 +112,7 @@ public class GenServiceImpl implements GenService {
 			}
 			searchParamsMap.append("map.put(\""+searchField.get(i) +"\","+searchField.get(i)+");");
 		}
-		String serviceResult = serviceStr.replaceAll(oldPackage,newPackage).replaceAll("SysResource", currentClassName).
+		String serviceResult = serviceStr.replaceAll(old,newPackage).replaceAll("SysResource", currentClassName).
 				replaceAll("sysresource/", currentClassName.toLowerCase()+"/").
 				replaceAll("sId", javaId).replaceAll("s_id", dbId).
 				replaceAll("sid", javaId).replaceAll("getsId", getIdMethod).
@@ -130,7 +138,7 @@ public class GenServiceImpl implements GenService {
 			searchParams1.append(searchField.get(i)+":\r\n<div class='layui-inline'>\r\n");
 			searchParams1.append("<input class='layui-input' name='"+searchField.get(i)+"' id='"+searchField.get(i)+"' autocomplete='off'>\r\n</div>\r\n");
 		}
-		String serviceResult = serviceStr.replaceAll(oldPackage,newPackage).replaceAll("sysresource/", currentClassName.toLowerCase()+"/").
+		String serviceResult = serviceStr.replaceAll(old,newPackage).replaceAll("sysresource/", currentClassName.toLowerCase()+"/").
 				replaceAll("sId", javaId).replaceAll("s_id", dbId).
 				replaceAll("\\{1\\}", searchParams1.toString()).
 				replaceAll("\\{2\\}", searchParams2.toString()).
@@ -187,6 +195,9 @@ public class GenServiceImpl implements GenService {
 	public static void main(String[] args) throws Exception {
 		GenServiceImpl impl = new GenServiceImpl();
 		impl.gen();
+		String oldPackage = "com.ptw";
+		String oldPackagePath = oldPackage.replaceAll("\\.", "/")+"/";
+		//System.out.println(oldPackagePath);
 		//impl.genPojo();
 		//impl.genMapper();
 		//impl.genController();

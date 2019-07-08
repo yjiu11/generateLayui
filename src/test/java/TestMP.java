@@ -33,7 +33,7 @@ public class TestMP {
     DataSourceConfig  dsConfig  = new DataSourceConfig();
     dsConfig.setDbType(DbType.MYSQL)  // 设置数据库类型
          .setDriverName("com.mysql.jdbc.Driver")
-         .setUrl("jdbc:mysql://localhost:3306/shiro")
+         .setUrl("jdbc:mysql://10.10.130.72:3306/shiro")
          .setUsername("root")
          .setPassword("mysqladmin");
      
@@ -48,7 +48,7 @@ public class TestMP {
     
     //4. 包名策略配置 
     PackageConfig pkConfig = new PackageConfig();
-    pkConfig.setParent("com.ptw.shiro")
+    pkConfig.setParent("com.ptw")
          .setMapper("mapper")
          .setService("service")
          .setController("controller")
